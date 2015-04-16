@@ -2,12 +2,14 @@ package gsvm_project;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -39,7 +41,10 @@ class App extends JFrame {
   JButton translate_z_minus;
   JButton scale_up;
   JButton scale_down;
+  JButton choose_colour;
+  Color colour;
   JFileChooser fc;
+  JColorChooser cc;
 
   App() {
     super();
@@ -278,6 +283,18 @@ class App extends JFrame {
       }
     });
     add(scale_down);
+
+    choose_colour = new JButton("Colour");
+    choose_colour.setSize(80, 20);
+    choose_colour.setLocation(704, 0);
+    choose_colour.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent ae) {
+        cc = new JColorChooser();
+        colour = JColorChooser.showDialog(cc, "Colour", colour);
+      }
+    });
+    add(choose_colour);
   }
 }
 
