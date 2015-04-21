@@ -13,6 +13,7 @@ import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -21,11 +22,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 class App extends JFrame {
 
-  Object object;
   Canvas canvas;
-  JLabel scale;
-  JLabel rotate;
-  JLabel translate;
+  Color colour;
+  Object object;
   JButton load;
   JButton rotate_x_plus;
   JButton rotate_y_plus;
@@ -42,9 +41,19 @@ class App extends JFrame {
   JButton scale_up;
   JButton scale_down;
   JButton choose_colour;
-  Color colour;
+  JButton light_confirm;
+  JButton hide;
+  JButton unhide;
+  JButton render;
+  JLabel scale;
+  JLabel rotate;
+  JLabel translate;
+  JLabel light;
   JFileChooser fc;
   JColorChooser cc;
+  JTextField light_x;
+  JTextField light_y;
+  JTextField light_z;
 
   App() {
     super();
@@ -295,6 +304,85 @@ class App extends JFrame {
       }
     });
     add(choose_colour);
+
+    light = new JLabel("Light (x, y, z)");
+    light.setSize(120, 20);
+    light.setLocation(610, 240);
+    add(light);
+
+    light_x = new JTextField();
+    light_x.setSize(55, 20);
+    light_x.setLocation(610, 270);
+    add(light_x);
+
+    light_y = new JTextField();
+    light_y.setSize(55, 20);
+    light_y.setLocation(670, 270);
+    add(light_y);
+
+    light_z = new JTextField();
+    light_z.setSize(55, 20);
+    light_z.setLocation(730, 270);
+    add(light_z);
+
+    light_confirm = new JButton("OK");
+    light_confirm.setSize(175, 20);
+    light_confirm.setLocation(610, 290);
+    light_confirm.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent ae) {
+        try {
+          float x = Float.parseFloat(light_x.getText());
+          float y = Float.parseFloat(light_y.getText());
+          float z = Float.parseFloat(light_z.getText());
+          object.setLight(new Vertex(-x, -y, -z));
+          repaint();
+        } catch (NumberFormatException ex) {
+          System.out.println("You entered non-float values.");
+        }
+      }
+    });
+    add(light_confirm);
+
+    hide = new JButton("Hide");
+    hide.setSize(70, 20);
+    hide.setLocation(610, 320);
+    hide.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent ae) {
+        object.hideInvisibleFaces();
+        repaint();
+      }
+    });
+    add(hide);
+
+    unhide = new JButton("Unhide");
+    unhide.setSize(100, 20);
+    unhide.setLocation(684, 320);
+    unhide.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent ae) {
+        object.unhideInvisibleFaces();
+        repaint();
+      }
+    });
+    add(unhide);
+
+    render = new JButton("Render");
+    render.setSize(175, 20);
+    render.setLocation(610, 350);
+    render.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent ae) {
+        if (colour != null) {
+          object.renderColour();
+          repaint();
+        } else {
+          System.out.println("Please select colour.");
+        }
+      }
+    });
+    add(render);
   }
 }
 
