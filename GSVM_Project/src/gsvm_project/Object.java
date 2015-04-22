@@ -1,6 +1,7 @@
 package gsvm_project;
 
 import static gsvm_project.MatrixOperations.*;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,12 +14,16 @@ public class Object {
   HashMap<Integer, Vertex> vertices;
   float x, y, z;
   int vertices_count;
+  Color colour;
+  Vertex light_vertex;
 
   Object() {
     x = 0;
     y = 0;
     z = 0;
     vertices_count = 0;
+    light_vertex = new Vertex(0, 0, 0);
+    colour = new Color((Color.white).getRGB());
     vertices = new HashMap<>();
     surfaces = new ArrayList<>();
   }
@@ -223,6 +228,22 @@ public class Object {
         vertices.put(i, vertex);
       }
     }
+  }
+
+  void setLight(Vertex vertex) {
+    // TODO
+  }
+
+  void hideInvisibleFaces() {
+    // TODO
+  }
+
+  void unhideInvisibleFaces() {
+    // TODO
+  }
+
+  void renderColour() {
+    // TODO
   }
 
   void clear() {
