@@ -11,19 +11,30 @@ import java.util.HashMap;
 public class Object {
 
   ArrayList<ArrayList<Integer>> surfaces;
+  ArrayList<Color> colours;
+  ArrayList<Color> shades;
   HashMap<Integer, Vertex> vertices;
   float x, y, z;
   int vertices_count;
   Color colour;
   Vertex light_vertex;
+  boolean isColoured;
+  boolean isLit;
+  boolean isHidden;
 
   Object() {
     x = 0;
     y = 0;
     z = 0;
+    isColoured = false;
+    isLit = false;
+    isHidden = false;
     vertices_count = 0;
     light_vertex = new Vertex(0, 0, 0);
     colour = new Color((Color.white).getRGB());
+    colours = new ArrayList<>();
+    light_vertex = new Vertex(0, 0, 0);
+    shades = new ArrayList<>();
     vertices = new HashMap<>();
     surfaces = new ArrayList<>();
   }
@@ -230,25 +241,58 @@ public class Object {
     }
   }
 
-  void setLight(Vertex vertex) {
-    // TODO
-  }
-
   void hideInvisibleFaces() {
-    // TODO
+    for (int i = 0; i < colours.size(); i++) {
+      colours.set(i, Color.white);
+    }
+    isHidden = true;
   }
 
   void unhideInvisibleFaces() {
+    isHidden = false;
+  }
+
+  void setLight(Vertex light_vertex) {
+    this.light_vertex = light_vertex;
+  }
+
+  void renderLight() {
     // TODO
+  }
+
+  void setColour(Color colour) {
+    this.colour = colour;
+  }
+
+  Color getColour(int index) {
+    if (!isLit) {
+      return colours.get(index);
+    } else {
+      return shades.get(index);
+    }
   }
 
   void renderColour() {
-    // TODO
+    colours.clear();
+    for (int i = 0; i < surfaces.size(); i++) {
+      colours.set(i, colour);
+    }
+    isColoured = true;
   }
 
   void clear() {
+    x = 0;
+    y = 0;
+    z = 0;
+    isColoured = false;
+    isLit = false;
+    isHidden = false;
+    light_vertex = new Vertex(0, 0, 0);
+    colour = new Color((Color.white).getRGB());
     vertices_count = 0;
     vertices.clear();
     surfaces.clear();
+    colours.clear();
+    shades.clear();
   }
 }
