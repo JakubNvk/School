@@ -1,10 +1,15 @@
 package gsvm_project;
 
 /**
- * @author jn
+ * @author JakubNvk
  */
 public class MatrixOperations {
 
+  /**
+   * Initialize matrix with 0 values.
+   * 
+   * @param matrix - matrix to be initialized
+   */
   static void initMatrix(float[][] matrix) {
     for (int i = 0; i < matrix.length; i++) {
       for (int j = 0; j < matrix.length; j++) {
@@ -13,6 +18,15 @@ public class MatrixOperations {
     }
   }
 
+  /**
+   * Initialize matrix with x, y, z, k values.
+   * 
+   * @param matrix - matrix to be initialized
+   * @param x - value on [0][0] position in matrix
+   * @param y - value on [1][1] position in matrix
+   * @param z - value on [2][2] position in matrix
+   * @param k - value on [3][3] position in matrix
+   */
   static void initMatrix(float[][] matrix, float x, float y, float z,
       float k) {
     initMatrix(matrix);
@@ -22,6 +36,13 @@ public class MatrixOperations {
     matrix[3][3] = k;
   }
 
+  /**
+   * Multiply two matrices.
+   * 
+   * @param matrix_a - first matrix to be multiplied
+   * @param matrix_b - second matrix to be multiplied
+   * @return matrix which is result of multiplication of matrix_a with matrix_b
+   */
   static float[][] multiplyMatrices(float[][] matrix_a,
       float[][] matrix_b) {
 
@@ -40,6 +61,14 @@ public class MatrixOperations {
     return matrix_c;
   }
 
+  /**
+   * Set value to [row][column] in matrix.
+   * 
+   * @param matrix - matrix to be edited
+   * @param row - row of the matrix
+   * @param column - column of the matrix
+   * @param value - value to be set
+   */
   static void setMatrixValue(float[][] matrix, int row, int column,
       float value) {
     matrix[row][column] = value;
