@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * @author jn
+ * @author JakubNvk
  */
 public class Object {
 
@@ -39,23 +39,51 @@ public class Object {
     surfaces = new ArrayList<>();
   }
 
+  /**
+   * Add vertex to object.
+   * 
+   * @param vertex - vertex to be added
+   */
   void addVertex(Vertex vertex) {
     vertices_count++;
     vertices.put(vertices_count, vertex);
   }
 
+  /**
+   * Get vertex from object at specified position in vertex list.
+   * 
+   * @param key - the key whose associated vertex is to be returned
+   * @return the vertex to which the specified key is mapped, or null if this
+   * map contains no mapping for the key
+   */
   Vertex getVertex(int key) {
     return vertices.get(key);
   }
 
+  /**
+   * Add surface to object.
+   * 
+   * @param surface - surface to be added
+   */
   void addSurface(ArrayList surface) {
     surfaces.add(surface);
   }
 
+  /**
+   * Get surface from object at specified position in surface list.
+   * 
+   * @param index - index of the surface to return
+   * @return the surface at the specified position in this list
+   */
   ArrayList<Integer> getSurface(int index) {
     return surfaces.get(index);
   }
 
+  /**
+   * Rotates object over the X axis.
+   *
+   * @param angle - the angle through which the object should be rotated
+   */
   void rotateX(double angle) {
     float[][] rotate_x_matrix = new float[4][4];
     float previous_x = x;
@@ -89,6 +117,11 @@ public class Object {
     translateZ(previous_z);
   }
 
+  /**
+   * Rotates object over the Y axis.
+   *
+   * @param angle - the angle through which the object should be rotated
+   */
   void rotateY(double angle) {
     float[][] rotate_y_matrix = new float[4][4];
     float previous_x = x;
@@ -122,6 +155,11 @@ public class Object {
     translateZ(previous_z);
   }
 
+  /**
+   * Rotates object over the Z axis.
+   *
+   * @param angle - the angle through which the object should be rotated
+   */
   void rotateZ(double angle) {
     float[][] rotate_z_matrix = new float[4][4];
     float previous_x = x;
@@ -155,6 +193,11 @@ public class Object {
     translateZ(previous_z);
   }
 
+  /**
+   * Translates object over X axis.
+   * 
+   * @param range - length by which the vector is to be moved
+   */
   void translateX(float range) {
     float[][] translate_x_matrix = new float[4][4];
 
@@ -173,6 +216,11 @@ public class Object {
     }
   }
 
+  /**
+   * Translates object over Y axis.
+   * 
+   * @param range - length by which the vector is to be moved
+   */
   void translateY(float range) {
     float[][] translate_y_matrix = new float[4][4];
 
@@ -191,6 +239,11 @@ public class Object {
     }
   }
 
+  /**
+   * Translates object over Z axis.
+   * 
+   * @param range - length by which the vector is to be moved
+   */
   void translateZ(float range) {
     float[][] translate_z_matrix = new float[4][4];
 
@@ -209,6 +262,9 @@ public class Object {
     }
   }
 
+  /**
+   * Scales the object up.
+   */
   void scaleUp() {
     float upscale = (float) 1.1;
     float[][] upscale_matrix = new float[4][4];
@@ -225,6 +281,9 @@ public class Object {
     }
   }
 
+  /**
+   * Scales the object down.
+   */
   void scaleDown() {
     float downscale = (float) 0.9;
     float[][] downscale_matrix = new float[4][4];
@@ -241,6 +300,9 @@ public class Object {
     }
   }
 
+  /**
+   * Hides invisible faces of the object.
+   */
   void hideInvisibleFaces() {
     for (int i = 0; i < colours.size(); i++) {
       colours.set(i, Color.white);
@@ -248,10 +310,18 @@ public class Object {
     isHidden = true;
   }
 
+  /**
+   * Shows invisible faces of the object.
+   */
   void unhideInvisibleFaces() {
     isHidden = false;
   }
 
+  /**
+   * Set vertex of light which is shining on object.
+   * 
+   * @param light_vertex - light vertex to be set
+   */
   void setLight(Vertex light_vertex) {
     this.light_vertex = light_vertex;
   }
@@ -260,10 +330,22 @@ public class Object {
     // TODO
   }
 
+  /**
+   * Set object colour.
+   * 
+   * @param colour - new colour of object
+   */
   void setColour(Color colour) {
     this.colour = colour;
   }
 
+  /**
+   * Get object colour.
+   * 
+   * @param index - index of surface
+   * @return object colour if the object is not lit, shade colour if the object
+   * is lit
+   */
   Color getColour(int index) {
     if (!isLit) {
       return colours.get(index);
@@ -272,6 +354,9 @@ public class Object {
     }
   }
 
+  /**
+   * Render object with set colour.
+   */
   void renderColour() {
     colours.clear();
     for (int i = 0; i < surfaces.size(); i++) {
@@ -280,6 +365,9 @@ public class Object {
     isColoured = true;
   }
 
+  /**
+   * Reset object data.
+   */
   void clear() {
     x = 0;
     y = 0;
