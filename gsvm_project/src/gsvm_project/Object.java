@@ -42,7 +42,7 @@ public class Object {
   /**
    * Add vertex to object.
    * 
-   * @param vertex - vertex to be added
+   * @param vertex vertex to be added
    */
   void addVertex(Vertex vertex) {
     vertices_count++;
@@ -52,7 +52,7 @@ public class Object {
   /**
    * Get vertex from object at specified position in vertex list.
    * 
-   * @param key - the key whose associated vertex is to be returned
+   * @param key the key whose associated vertex is to be returned
    * @return the vertex to which the specified key is mapped, or null if this
    * map contains no mapping for the key
    */
@@ -63,7 +63,7 @@ public class Object {
   /**
    * Add surface to object.
    * 
-   * @param surface - surface to be added
+   * @param surface surface to be added
    */
   void addSurface(ArrayList surface) {
     surfaces.add(surface);
@@ -72,7 +72,7 @@ public class Object {
   /**
    * Get surface from object at specified position in surface list.
    * 
-   * @param index - index of the surface to return
+   * @param index index of the surface to return
    * @return the surface at the specified position in this list
    */
   ArrayList<Integer> getSurface(int index) {
@@ -82,7 +82,7 @@ public class Object {
   /**
    * Rotates object over the X axis.
    *
-   * @param angle - the angle through which the object should be rotated
+   * @param angle the angle through which the object should be rotated
    */
   void rotateX(double angle) {
     float[][] rotate_x_matrix = new float[4][4];
@@ -120,7 +120,7 @@ public class Object {
   /**
    * Rotates object over the Y axis.
    *
-   * @param angle - the angle through which the object should be rotated
+   * @param angle the angle through which the object should be rotated
    */
   void rotateY(double angle) {
     float[][] rotate_y_matrix = new float[4][4];
@@ -158,7 +158,7 @@ public class Object {
   /**
    * Rotates object over the Z axis.
    *
-   * @param angle - the angle through which the object should be rotated
+   * @param angle the angle through which the object should be rotated
    */
   void rotateZ(double angle) {
     float[][] rotate_z_matrix = new float[4][4];
@@ -196,7 +196,7 @@ public class Object {
   /**
    * Translates object over X axis.
    * 
-   * @param range - length by which the vector is to be moved
+   * @param range length by which the vector is to be moved
    */
   void translateX(float range) {
     float[][] translate_x_matrix = new float[4][4];
@@ -219,7 +219,7 @@ public class Object {
   /**
    * Translates object over Y axis.
    * 
-   * @param range - length by which the vector is to be moved
+   * @param range length by which the vector is to be moved
    */
   void translateY(float range) {
     float[][] translate_y_matrix = new float[4][4];
@@ -242,7 +242,7 @@ public class Object {
   /**
    * Translates object over Z axis.
    * 
-   * @param range - length by which the vector is to be moved
+   * @param range length by which the vector is to be moved
    */
   void translateZ(float range) {
     float[][] translate_z_matrix = new float[4][4];
@@ -320,7 +320,7 @@ public class Object {
   /**
    * Set vertex of light which is shining on object.
    * 
-   * @param light_vertex - light vertex to be set
+   * @param light_vertex light vertex to be set
    */
   void setLight(Vertex light_vertex) {
     this.light_vertex = light_vertex;
@@ -333,7 +333,7 @@ public class Object {
   /**
    * Set object colour.
    * 
-   * @param colour - new colour of object
+   * @param colour new colour of object
    */
   void setColour(Color colour) {
     this.colour = colour;
@@ -342,7 +342,7 @@ public class Object {
   /**
    * Get object colour.
    * 
-   * @param index - index of surface
+   * @param index index of surface
    * @return object colour if the object is not lit, shade colour if the object
    * is lit
    */
