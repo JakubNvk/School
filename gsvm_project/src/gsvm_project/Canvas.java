@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 /**
- * @author jn
+ * @author JakubNvk
  */
 public class Canvas extends JPanel {
 
@@ -39,7 +39,27 @@ public class Canvas extends JPanel {
         y[i] = (int) (-vertex.y * 100) + 200;
         i++;
       }
-      g.drawPolygon(x, y, vertices_size);
+
+      if (!object.isHidden) {
+        g.drawPolygon(x, y, vertices_size);
+      } else {
+        Vertex v0 = vertices.get(0);
+        Vertex v1 = vertices.get(1);
+        Vertex v2 = vertices.get(2);
+        float[] vector_a = {v2.x - v1.x, v2.y - v1.y, v2.z - v1.z};
+        float[] vector_b = {v2.x - v0.x, v2.y - v0.y, v2.z - v0.z};
+        float[] vector_normal = {
+          vector_a[1] * vector_b[2] - vector_a[2] * vector_b[1],
+          vector_a[2] * vector_b[0] - vector_a[0] * vector_b[2],
+          vector_a[0] * vector_b[1] - vector_a[1] * vector_b[0]};
+
+        if (vector_normal[2] >= 0) {
+          g.setColor(object.getColour(i));
+          g.fillPolygon(x, y, vertices.size());
+          g.drawPolygon(x, y, vertices.size());
+        }
+      }
+      i++;
     }
   }
 }
