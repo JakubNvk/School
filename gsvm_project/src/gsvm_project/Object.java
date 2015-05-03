@@ -11,14 +11,13 @@ import java.util.HashMap;
 public class Object {
 
   ArrayList<ArrayList<Integer>> surfaces;
+  HashMap<Integer, Vertex> vertices;
   ArrayList<Color> colours;
   ArrayList<Color> shades;
-  HashMap<Integer, Vertex> vertices;
   float x, y, z;
   int vertices_count;
   Color colour;
   Vertex light_vertex;
-  boolean isColoured;
   boolean isLit;
   boolean isHidden;
 
@@ -26,22 +25,21 @@ public class Object {
     x = 0;
     y = 0;
     z = 0;
-    isColoured = false;
     isLit = false;
     isHidden = false;
     vertices_count = 0;
     light_vertex = new Vertex(0, 0, 0);
     colour = new Color((Color.white).getRGB());
     colours = new ArrayList<>();
-    light_vertex = new Vertex(0, 0, 0);
     shades = new ArrayList<>();
-    vertices = new HashMap<>();
     surfaces = new ArrayList<>();
+    light_vertex = new Vertex(0, 0, 0);
+    vertices = new HashMap<>();
   }
 
   /**
    * Add vertex to object.
-   * 
+   *
    * @param vertex vertex to be added
    */
   void addVertex(Vertex vertex) {
@@ -51,7 +49,7 @@ public class Object {
 
   /**
    * Get vertex from object at specified position in vertex list.
-   * 
+   *
    * @param key the key whose associated vertex is to be returned
    * @return the vertex to which the specified key is mapped, or null if this
    * map contains no mapping for the key
@@ -62,16 +60,18 @@ public class Object {
 
   /**
    * Add surface to object.
-   * 
+   *
    * @param surface surface to be added
    */
   void addSurface(ArrayList surface) {
     surfaces.add(surface);
+    shades.add(colour);
+    colours.add(colour);
   }
 
   /**
    * Get surface from object at specified position in surface list.
-   * 
+   *
    * @param index index of the surface to return
    * @return the surface at the specified position in this list
    */
@@ -115,6 +115,10 @@ public class Object {
     translateX(previous_x);
     translateY(previous_y);
     translateZ(previous_z);
+
+    if (isLit) {
+      renderLight();
+    }
   }
 
   /**
@@ -153,6 +157,10 @@ public class Object {
     translateX(previous_x);
     translateY(previous_y);
     translateZ(previous_z);
+
+    if (isLit) {
+      renderLight();
+    }
   }
 
   /**
@@ -191,11 +199,15 @@ public class Object {
     translateX(previous_x);
     translateY(previous_y);
     translateZ(previous_z);
+
+    if (isLit) {
+      renderLight();
+    }
   }
 
   /**
    * Translates object over X axis.
-   * 
+   *
    * @param range length by which the vector is to be moved
    */
   void translateX(float range) {
@@ -213,12 +225,16 @@ public class Object {
         vertex.multiplyVertex(translate_x_matrix);
         vertices.put(i, vertex);
       }
+
+      if (isLit) {
+        renderLight();
+      }
     }
   }
 
   /**
    * Translates object over Y axis.
-   * 
+   *
    * @param range length by which the vector is to be moved
    */
   void translateY(float range) {
@@ -236,12 +252,16 @@ public class Object {
         vertex.multiplyVertex(translate_y_matrix);
         vertices.put(i, vertex);
       }
+
+      if (isLit) {
+        renderLight();
+      }
     }
   }
 
   /**
    * Translates object over Z axis.
-   * 
+   *
    * @param range length by which the vector is to be moved
    */
   void translateZ(float range) {
@@ -258,6 +278,10 @@ public class Object {
         vertices.remove(i);
         vertex.multiplyVertex(translate_z_matrix);
         vertices.put(i, vertex);
+      }
+
+      if (isLit) {
+        renderLight();
       }
     }
   }
@@ -315,24 +339,112 @@ public class Object {
    */
   void unhideInvisibleFaces() {
     isHidden = false;
+    isLit = false;
   }
 
   /**
    * Set vertex of light which is shining on object.
-   * 
+   *
    * @param light_vertex light vertex to be set
    */
   void setLight(Vertex light_vertex) {
     this.light_vertex = light_vertex;
   }
 
+  /**
+   * Render object with set light.
+   */
   void renderLight() {
-    // TODO
+    if (!isHidden) {
+      hideInvisibleFaces();
+    }
+
+    int index = 0;
+    for (ArrayList<Integer> surface : surfaces) {
+      ArrayList<Vertex> surface_vertices = new ArrayList<>();
+      for (Integer surface_point : surface) {
+        surface_vertices.add(getVertex(surface_point));
+      }
+
+      float average_x = 0;
+      float average_y = 0;
+      float average_z = 0;
+      for (Vertex vertex : surface_vertices) {
+        average_x += vertex.x;
+        average_y += vertex.y;
+        average_z += vertex.z;
+      }
+
+      int surface_size = surface_vertices.size();
+      average_x = average_x / surface_size;
+      average_y = average_y / surface_size;
+      average_z = average_z / surface_size;
+      Vertex v0 = surface_vertices.get(0);
+      Vertex v1 = surface_vertices.get(1);
+      Vertex v2 = surface_vertices.get(2);
+
+      float[] vector_a = {v1.x - v0.x, v1.y - v0.y, v1.z - v0.z};
+      float[] vector_b = {v2.x - v1.x, v2.y - v1.y, v2.z - v1.z};
+      float[] vector_n = {
+        vector_a[1] * vector_b[2] - vector_a[2] * vector_b[1],
+        vector_a[2] * vector_b[0] - vector_a[0] * vector_b[2],
+        vector_a[0] * vector_b[1] - vector_a[1] * vector_b[0]};
+
+      float normalize = (float) Math.sqrt(Math.pow(vector_n[0], 2)
+          + Math.pow(vector_n[1], 2) + Math.pow(vector_n[2], 2));
+      vector_n[0] = vector_n[0] / normalize;
+      vector_n[1] = vector_n[1] / normalize;
+      vector_n[2] = vector_n[2] / normalize;
+
+      float vector_l[] = new float[3];
+      vector_l[0] = average_x - light_vertex.x;
+      vector_l[1] = average_y - light_vertex.y;
+      vector_l[2] = average_z - light_vertex.z;
+      normalize = (float) Math.sqrt(Math.pow(vector_l[0], 2)
+          + Math.pow(vector_l[1], 2) + Math.pow(vector_l[2], 2));
+      vector_l[0] = average_x - light_vertex.x / normalize;
+      vector_l[1] = average_y - light_vertex.y / normalize;
+      vector_l[2] = average_z - light_vertex.z / normalize;
+
+      float intensity = (float) Math.cos(vector_n[0] * vector_l[0]
+          + vector_n[1] * vector_l[1] + vector_n[2] * vector_l[2]);
+      int color_r = colours.get(index).getRed();
+      int color_g = colours.get(index).getGreen();
+      int color_b = colours.get(index).getBlue();
+      int new_r, new_g, new_b;
+
+      if (color_r * intensity < 0) {
+        new_r = 0;
+      } else if (color_r * intensity > color_r) {
+        new_r = color_r;
+      } else {
+        new_r = (int) (color_r * intensity);
+      }
+      if (color_g * intensity < 0) {
+        new_g = 0;
+      } else if (color_g * intensity > color_g) {
+        new_g = color_g;
+      } else {
+        new_g = (int) (color_g * intensity);
+      }
+      if (color_b * intensity < 0) {
+        new_b = 0;
+      } else if (color_b * intensity > color_b) {
+        new_b = color_b;
+      } else {
+        new_b = (int) (color_b * intensity);
+      }
+      colour = new Color(new_r, new_g, new_b);
+      shades.set(index, colour);
+      index++;
+
+      isLit = true;
+    }
   }
 
   /**
    * Set object colour.
-   * 
+   *
    * @param colour new colour of object
    */
   void setColour(Color colour) {
@@ -341,7 +453,7 @@ public class Object {
 
   /**
    * Get object colour.
-   * 
+   *
    * @param index index of surface
    * @return object colour if the object is not lit, shade colour if the object
    * is lit
@@ -358,11 +470,10 @@ public class Object {
    * Render object with set colour.
    */
   void renderColour() {
-    colours.clear();
+    isHidden = true;
     for (int i = 0; i < surfaces.size(); i++) {
       colours.set(i, colour);
     }
-    isColoured = true;
   }
 
   /**
@@ -372,7 +483,6 @@ public class Object {
     x = 0;
     y = 0;
     z = 0;
-    isColoured = false;
     isLit = false;
     isHidden = false;
     light_vertex = new Vertex(0, 0, 0);

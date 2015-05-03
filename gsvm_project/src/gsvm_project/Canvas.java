@@ -24,6 +24,7 @@ public class Canvas extends JPanel {
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
 
+    int index = 0;
     for (ArrayList<Integer> surface : object.surfaces) {
       ArrayList<Vertex> vertices = new ArrayList<>();
       for (Integer vertex_index : surface) {
@@ -47,19 +48,20 @@ public class Canvas extends JPanel {
         Vertex v1 = vertices.get(1);
         Vertex v2 = vertices.get(2);
         float[] vector_a = {v2.x - v1.x, v2.y - v1.y, v2.z - v1.z};
-        float[] vector_b = {v2.x - v0.x, v2.y - v0.y, v2.z - v0.z};
+        float[] vector_b = {v1.x - v0.x, v1.y - v0.y, v1.z - v0.z};
         float[] vector_normal = {
           vector_a[1] * vector_b[2] - vector_a[2] * vector_b[1],
           vector_a[2] * vector_b[0] - vector_a[0] * vector_b[2],
           vector_a[0] * vector_b[1] - vector_a[1] * vector_b[0]};
 
         if (vector_normal[2] >= 0) {
-          g.setColor(object.getColour(i));
-          g.fillPolygon(x, y, vertices.size());
-          g.drawPolygon(x, y, vertices.size());
+          g.setColor(object.getColour(index));
+          g.fillPolygon(x, y, vertices_size);
+          g.setColor(Color.black);
+          g.drawPolygon(x, y, vertices_size);
         }
       }
-      i++;
+      index++;
     }
   }
 }

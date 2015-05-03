@@ -18,7 +18,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
- * @author jn
+ * @author JakubNvk
  */
 class App extends JFrame {
 
@@ -301,6 +301,7 @@ class App extends JFrame {
       public void actionPerformed(ActionEvent ae) {
         cc = new JColorChooser();
         colour = JColorChooser.showDialog(cc, "Colour", colour);
+        object.setColour(colour);
       }
     });
     add(choose_colour);
@@ -335,7 +336,8 @@ class App extends JFrame {
           float x = Float.parseFloat(light_x.getText());
           float y = Float.parseFloat(light_y.getText());
           float z = Float.parseFloat(light_z.getText());
-          object.setLight(new Vertex(-x, -y, -z));
+          object.setLight(new Vertex(x, y, z));
+          object.renderLight();
           repaint();
         } catch (NumberFormatException ex) {
           System.out.println("You entered non-float values.");
@@ -374,12 +376,8 @@ class App extends JFrame {
     render.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent ae) {
-        if (colour != null) {
-          object.renderColour();
-          repaint();
-        } else {
-          System.out.println("Please select colour.");
-        }
+        object.renderColour();
+        repaint();
       }
     });
     add(render);
