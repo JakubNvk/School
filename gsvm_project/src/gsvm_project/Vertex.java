@@ -17,6 +17,11 @@ public class Vertex {
     this.k = 1;
   }
 
+  /**
+   * Multiply vertex with given matrix. 
+  * 
+   * @param matrix multiplication matrix
+   */
   void multiplyVertex(float[][] matrix) {
     float new_x = 0, new_y = 0, new_z = 0;
 
