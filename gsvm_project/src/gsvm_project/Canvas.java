@@ -12,6 +12,11 @@ public class Canvas extends JPanel {
 
   Object object;
 
+  /**
+   * Creates a 600x400 graphical canvas with white background.
+   * 
+   * @param object object that contains model data
+   */
   public Canvas(Object object) {
     this.object = object;
 
