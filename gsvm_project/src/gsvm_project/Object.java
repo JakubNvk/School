@@ -21,6 +21,9 @@ public class Object {
   boolean isLit;
   boolean isHidden;
 
+  /**
+   * Create graphical object with default values.
+   */
   Object() {
     x = 0;
     y = 0;
