@@ -1,6 +1,7 @@
 from flask import Blueprint, flash, Markup, redirect, render_template, url_for
+from flask.ext.login import current_user, login_required, login_user, logout_user
 
-from .forms import SiteForm, VisitForm
+from .forms import LoginForm, RegistrationForm, ExpeditionForm
 from .data import db, query_to_list
 from .models import User
 
@@ -9,7 +10,10 @@ skialp = Blueprint("skialp", __name__)
 
 @skialp.route("/")
 def index():
-    pass
+    if not current_user.is_anonymous():
+        return redirect(url_for(".view_sites"))
+    return render_template("index.html")
+
 
 @skialp.route('/login/', methods=('GET', 'POST'))
 def login():

@@ -2,8 +2,7 @@ from flask import Flask
 
 from .auth import login_manager
 from .data import db
-from .project.views import skialp
-from .users.views import users
+from .views import skialp
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -18,4 +17,3 @@ db.init_app(app)
 login_manager.init_app(app)
 
 app.register_blueprint(skialp)
-app.register_blueprint(users)

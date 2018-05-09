@@ -3,7 +3,7 @@
 {% block title %}Login{% endblock %}
 {% block content %}
 {{super()}}
-<form action="{{ url_for('login', ext=request.args.get('next', '')) }}" method="POST">
+<form action="{{ url_for('skialp.login', ext=request.args.get('next', '')) }}" method="POST">
 {{ forms.render(form) }}
 <p><input type="Submit" value="Sign In"></p>
 </form>

@@ -1,7 +1,9 @@
 from flask.ext.wtf import Form
 from sqlalchemy.orm.exc import MultipleResultsFound, NoResultFound
 from wtforms import fields
-from wtforms.validators import Email, InputRequired, ValidationError
+from wtforms.validators import (Email, InputRequired, ValidationError,
+                                DataRequired, NumberRange)
+from .validators import DateValidator
 
 from .models import User
 
@@ -24,23 +26,20 @@ class LoginForm(Form):
 
 
 class RegistrationForm(Form):
-    name = fields.StringField("Display Name")
     email = fields.StringField(validators=[InputRequired(), Email()])
     password = fields.StringField(validators=[InputRequired()])
 
     def validate_email(form, field):
         user = User.query.filter(User.email == field.data).first()
         if user is not None:
-            raise ValidationError("A user with that email already exists")
+            raise ValidationError("A user with that email already exists.")
 
 
 class ExpeditionForm(Form):
     valid_to = fields.StringField(validators=[DateValidator()])
     min_difficulty = fields.IntegerField(default=1,
-                                         validators=[validators.NumberRange(min=1,
-                                                                            max=10)])
+                                         validators=[NumberRange(min=1, max=10)])
     max_difficulty = fields.IntegerField(default=10,
-                                         validators=[validators.NumberRange(min=1,
-                                                                            max=10)])
-    location = fields.StringField(validators=[validators.DataRequired()])
-    description = fields.StringField(validators=[validators.DataRequired()])
+                                         validators=[NumberRange(min=1, max=10)])
+    location = fields.StringField(validators=[DataRequired()])
+    description = fields.StringField(validators=[DataRequired()])
