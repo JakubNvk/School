@@ -8,6 +8,10 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from project.data import db, CRUDMixin
 
 
+association_table = db.Table('association',
+                             db.Model.metadata,
+                             db.Column('user', db.Integer, db.ForeignKey('user.id')),
+                             db.Column('expedition', db.Integer, db.ForeignKey('expedition.id')) )
 
 class User(UserMixin, CRUDMixin, db.Model):
     __tablename__ = 'user'
@@ -18,9 +22,9 @@ class User(UserMixin, CRUDMixin, db.Model):
     _salt = db.Column(db.String(120))
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
     profile = db.relationship('Profile')
-    created_expeditions = db.relationship('Expedition')
+    created_expeditions = db.relationship('Expedition', backref='creator')
     comments = db.relationship('Comment')
-    expeditions = db.Column(db.Integer, db.ForeignKey('expedition.id'))
+    expeditions = db.relationship('Expedition', secondary=association_table, back_populates='members')
     messages = db.relationship('Message')
 
     @hybrid_property
@@ -81,7 +85,7 @@ class Expedition(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     valid_to = db.Column(db.DateTime, default=plus_year)
-    creator = db.Column(db.Integer, db.ForeignKey('user.id'))
+    creator_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
     deleted_at = db.Column(db.DateTime, default=plus_year)
     min_difficulty = db.Column(db.Integer, default=0)
@@ -89,7 +93,8 @@ class Expedition(db.Model):
     description = db.Column(db.String)
     comments = db.relationship('Comment')
     locations = db.relationship('Location')
-    members = db.relationship('User')
+    members = db.relationship('User', secondary=association_table, back_populates='expeditions')
+
 
 
 class Location(db.Model):

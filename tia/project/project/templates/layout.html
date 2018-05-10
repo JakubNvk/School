@@ -18,7 +18,7 @@
           {% if current_user.is_anonymous() %}
           <a href="{{url_for('skialp.register')}}">Register</a> / <a href="{{url_for('skialp.login')}}">Log In</a>
           {% else %}
-          Logged in as {{current_user.name}} <a href="{{url_for('logout')}}">Logout</a>
+          Logged in as {{current_user.email}} <a href="{{url_for('skialp.logout')}}">Logout</a>
           {% endif %}
           {% block content %}{% endblock content %}
         </li>
