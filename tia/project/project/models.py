@@ -20,7 +20,7 @@ class User(UserMixin, CRUDMixin, db.Model):
     profile = db.relationship('Profile', backref='user')
     created_expeditions = db.relationship('Expedition')
     comments = db.relationship('Comment')
-    expeditions = db.relationship('Expedition')
+    expeditions = db.Column(db.Integer, db.ForeignKey('user.id'))
     received_msgs = db.relationship('Message')
     sent_msgs = db.relationship('Message')
 
@@ -60,17 +60,17 @@ class Comment(db.Model):
     __tablename__ = 'comment'
 
     id = db.Column(db.Integer, primary_key=True)
-    user = db.relationship('User')
+    user = db.Column(db.Integer, db.ForeignKey('user.id'))
     text = db.Column(db.String)
-    expedition = db.relationship('Expedition')
+    expedition = db.Column(db.Integer, db.ForeignKey('expedition.id'))
 
 
 class Message(db.Model):
     __tablename__ = 'message'
 
     id = db.Column(db.Integer, primary_key=True)
-    recipient = db.relationship('User')
-    sender = db.relationship('User')
+    recipient = db.Column(db.Integer, db.ForeignKey('user.id'))
+    sender = db.Column(db.Integer, db.ForeignKey('user.id'))
     text = db.Column(db.String)
     created = db.Column(db.DateTime)
 
@@ -83,7 +83,7 @@ class Expedition(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     valid_to = db.Column(db.DateTime, default=plus_year)
-    creator = db.relationship('User')
+    creator = db.Column(db.Integer, db.ForeignKey('user.id'))
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
     deleted_at = db.Column(db.DateTime, default=plus_year)
     min_difficulty = db.Column(db.Integer, default=0)
@@ -99,4 +99,4 @@ class Location(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
-    expeditions = db.relationship('Expedition')
+    expeditions = db.Column(db.Integer, db.ForeignKey('expedition.id'))
