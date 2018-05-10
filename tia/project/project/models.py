@@ -17,7 +17,7 @@ class User(UserMixin, CRUDMixin, db.Model):
     _password = db.Column(db.LargeBinary(120))
     _salt = db.Column(db.String(120))
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
-    profile = db.relationship('Profile', backref='user')
+    profile = db.relationship('Profile')
     created_expeditions = db.relationship('Expedition')
     comments = db.relationship('Comment')
     expeditions = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -69,8 +69,12 @@ class Message(db.Model):
     __tablename__ = 'message'
 
     id = db.Column(db.Integer, primary_key=True)
-    recipient = db.Column(db.Integer, db.ForeignKey('user.id'))
-    sender = db.Column(db.Integer, db.ForeignKey('user.id'))
+    recipient_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+
+    recipient = db.relationship('User', foreign_keys=[recipient_id])
+    sender = db.relationship('User', foreign_keys=[sender_id])
     text = db.Column(db.String)
     created = db.Column(db.DateTime)
 
