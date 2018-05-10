@@ -20,9 +20,8 @@ class User(UserMixin, CRUDMixin, db.Model):
     profile = db.relationship('Profile')
     created_expeditions = db.relationship('Expedition')
     comments = db.relationship('Comment')
-    expeditions = db.Column(db.Integer, db.ForeignKey('user.id'))
-    received_msgs = db.relationship('Message')
-    sent_msgs = db.relationship('Message')
+    expeditions = db.Column(db.Integer, db.ForeignKey('expedition.id'))
+    messages = db.relationship('Message')
 
     @hybrid_property
     def password(self):
@@ -69,12 +68,7 @@ class Message(db.Model):
     __tablename__ = 'message'
 
     id = db.Column(db.Integer, primary_key=True)
-    recipient_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
-
-    recipient = db.relationship('User', foreign_keys=[recipient_id])
-    sender = db.relationship('User', foreign_keys=[sender_id])
     text = db.Column(db.String)
     created = db.Column(db.DateTime)
 
