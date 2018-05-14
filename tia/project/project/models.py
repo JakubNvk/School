@@ -48,7 +48,7 @@ class User(UserMixin, CRUDMixin, db.Model):
         return bytes(buff)
 
 
-class Profile(db.Model):
+class Profile(CRUDMixin, db.Model):
     __tablename__ = 'profile'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -59,7 +59,7 @@ class Profile(db.Model):
     description = db.Column(db.String)
 
 
-class Comment(db.Model):
+class Comment(CRUDMixin, db.Model):
     __tablename__ = 'comment'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -68,7 +68,7 @@ class Comment(db.Model):
     expedition = db.Column(db.Integer, db.ForeignKey('expedition.id'))
 
 
-class Message(db.Model):
+class Message(CRUDMixin, db.Model):
     __tablename__ = 'message'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -78,7 +78,7 @@ class Message(db.Model):
 
 
 
-class Expedition(db.Model):
+class Expedition(CRUDMixin, db.Model):
     __tablename__ = 'expedition'
 
     plus_year = datetime.datetime.now() + datetime.timedelta(days=365)
@@ -97,7 +97,7 @@ class Expedition(db.Model):
 
 
 
-class Location(db.Model):
+class Location(CRUDMixin, db.Model):
     __tablename__ = 'location'
 
     id = db.Column(db.Integer, primary_key=True)

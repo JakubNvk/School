@@ -1,4 +1,5 @@
-from flask.ext.wtf import Form
+import flask
+from flask_wtf import Form
 from sqlalchemy.orm.exc import MultipleResultsFound, NoResultFound
 from wtforms import fields
 from wtforms.validators import (Email, InputRequired, ValidationError,
@@ -33,6 +34,10 @@ class RegistrationForm(Form):
         user = User.query.filter(User.email == field.data).first()
         if user is not None:
             raise ValidationError("A user with that email already exists.")
+
+
+class ProfileForm(Form):
+    pass
 
 
 class ExpeditionForm(Form):

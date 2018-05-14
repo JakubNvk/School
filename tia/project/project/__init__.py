@@ -1,17 +1,23 @@
 from flask import Flask
-from flask_restful import Api
+from flask.ext.restful import Api
 
 from .auth import login_manager
 from .data import db
 from .views import skialp
 
-from .endpoints import MyExpeditions
+from .endpoints import ProfileList, ProfileDetail, ExpeditionList, ExpeditionDetail, ExpeditionMembership
 
 app = Flask(__name__)
 api = Api(app)
 app.config.from_object('config')
 
-api.add_resource(MyExpeditions, '/my_expeditions/<string:myexp_id>')
+# API resource routing
+api.add_resource(ProfileList, '/profile')
+api.add_resource(ProfileDetail, '/profile/<int:id>')
+api.add_resource(ExpeditionList, '/expeditions')
+api.add_resource(ExpeditionDetail, '/expedition/<int:id>')
+api.add_resource(ExpeditionMembership, '/expedition/<int:id>/membership')
+
 
 @app.context_processor
 def provide_constants():
