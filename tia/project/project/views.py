@@ -15,12 +15,12 @@ def index():
     return render_template('index.html')
 
 
-@skialp.route('/dashboard/')
+@skialp.route('/dashboard')
 def dashboard():
     return render_template('dashboard.html')
 
 
-@skialp.route('/login/', methods=('GET', 'POST'))
+@skialp.route('/login', methods=('GET', 'POST'))
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -30,7 +30,7 @@ def login():
     return render_template('login.html', form=form)
 
 
-@skialp.route('/register/', methods=('GET', 'POST'))
+@skialp.route('/register', methods=('GET', 'POST'))
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
@@ -40,7 +40,7 @@ def register():
     return render_template('register.html', form=form)
 
 
-@skialp.route('/logout/')
+@skialp.route('/logout')
 @login_required
 def logout():
     logout_user()

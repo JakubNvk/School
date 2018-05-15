@@ -10,7 +10,7 @@ class AnonymousUser(AnonymousUserMixin):
 
 
 login_manager.anonymous_user = AnonymousUser
-login_manager.login_view = "login"
+login_manager.login_view = "skialp.login"
 
 
 @login_manager.user_loader
