@@ -12,11 +12,11 @@ api = Api(app)
 app.config.from_object('config')
 
 # API resource routing
-api.add_resource(ProfileList, '/profile')
-api.add_resource(ProfileDetail, '/profile/<int:id>')
-api.add_resource(ExpeditionList, '/expeditions')
-api.add_resource(ExpeditionDetail, '/expedition/<int:id>')
-api.add_resource(ExpeditionMembership, '/expedition/<int:id>/membership')
+api.add_resource(ProfileList, '/api/profile')
+api.add_resource(ProfileDetail, '/api/profile/<int:id>')
+api.add_resource(ExpeditionList, '/api/expeditions')
+api.add_resource(ExpeditionDetail, '/api/expedition/<int:id>')
+api.add_resource(ExpeditionMembership, '/api/expedition/<int:id>/membership')
 
 
 @app.context_processor
