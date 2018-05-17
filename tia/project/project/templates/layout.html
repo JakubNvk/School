@@ -4,39 +4,47 @@
     <meta charset="UTF-8">
     <title>{% block title %}{{ title }}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- styles -->
-    <!--
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
-    -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
+    <!-- styles -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+
   </head>
   <body>
     <div class="container">
-      <h1>{{ self.title() }}</h1>
-      <br>
-      <div id="main">
-        <li><a href="/">Home</a></li>
-        <li>
-          {% if current_user.is_anonymous() %}
-          <a href="{{url_for('skialp.register')}}">Register</a> / <a href="{{url_for('skialp.login')}}">Log In</a>
-          {% else %}
-          Logged in as {{current_user.email}} <a href="{{url_for('skialp.logout')}}">Logout</a>
-          {% endif %}
-          {% block content %}{% endblock content %}
+      <div id="main"><br>
+
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="/">Skialp group planner</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              {% if current_user.is_anonymous() %}
+              <ul class="nav navbar-nav">
+                <li><a href="{{url_for('skialp.dashboard')}}">Dashboard</a></li>
+                <li><a href="{{url_for('skialp.login')}}">Login</a></li>
+                <li><a href="{{url_for('skialp.register')}}">Register</a></li>
+              {% else %}
+              <ul class="nav navbar-nav">
+                <li><a href="{{url_for('skialp.index')}}">Home</a></li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                <li><a>Logged in as {{current_user.email}}</a></li>
+                <li><a href="{{url_for('skialp.logout')}}">Logout</a></li>
+              </ul>
+              {% endif %}
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+        </nav>
+
+       {% block content %}{% endblock content %}
         </li>
-        <div id="reactEntry"></div>
-        <div id="react"></div>
       </div>
     </div>
+
     <!-- scripts -->
     <script type="text/javascript" src="{{ url_for('static', filename='scripts/js/bundle.js') }}"></script>
-    <!--
-    <script src="{{ url_for('static', filename='bower_components/react/react.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='bower_components/react/react-dom.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='bower_components/react/react-bootstrap.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='scripts/js/main.js') }}"></script>
-    -->
+
   </body>
 </html>
