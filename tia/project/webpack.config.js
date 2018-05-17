@@ -1,10 +1,11 @@
 var webpack = require('webpack');  
 module.exports = {
+  mode: 'development',
   entry: [
-    __dirname + '/project/static/scripts/jsx/index.js'
+    __dirname + '/project/static/scripts/jsx/'
   ],
   output: {
-    path: __dirname + 'project/static/scripts/js/',
+    path: __dirname + '/project/static/scripts/js',
     filename: "bundle.js"
   },
   module: {

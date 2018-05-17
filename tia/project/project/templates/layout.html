@@ -8,6 +8,8 @@
     <!--
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
     -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
   </head>
   <body>
@@ -24,11 +26,13 @@
           {% endif %}
           {% block content %}{% endblock content %}
         </li>
+        <div id="reactEntry"></div>
+        <div id="react"></div>
       </div>
     </div>
     <!-- scripts -->
+    <script type="text/javascript" src="{{ url_for('static', filename='scripts/js/bundle.js') }}"></script>
     <!--
-    <script type="text/javascript" src="{{ url_for('static', filename='bundle.js') }}"></script>
     <script src="{{ url_for('static', filename='bower_components/react/react.min.js') }}"></script>
     <script src="{{ url_for('static', filename='bower_components/react/react-dom.min.js') }}"></script>
     <script src="{{ url_for('static', filename='bower_components/react/react-bootstrap.min.js') }}"></script>

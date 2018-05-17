@@ -5,18 +5,18 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "./node_modules/.bin/webpack-cli",
+    "build": "webpack",
     "start": "python run.py",
     "watch": "./node_modules/.bin/webpack-cli --watch --display-error-details"
   },
   "author": "JakubNvk",
   "license": "ISC",
   "devDependencies": {
-    "@babel/plugin-transform-runtime": "^7.0.0-beta.47",
-    "babel-core": "^6.4.5",
-    "babel-loader": "^6.2.1",
-    "babel-preset-es2015": "^6.3.13",
-    "babel-preset-react": "^6.3.13",
+    "@babel/core": "^7.0.0-beta.47",
+    "@babel/preset-es2015": "^7.0.0-beta.47",
+    "@babel/preset-react": "^7.0.0-beta.47",
+    "babel-loader": "^7.1.4",
+    "babel-preset-react": "^6.24.1",
     "webpack": "^4.8.3",
     "webpack-cli": "^2.1.3",
     "webpack-dev-server": "^3.1.4",
@@ -26,6 +26,8 @@
     "@babel/runtime": "^7.0.0-beta.47",
     "npm": "^6.0.0",
     "react": "^0.14.7",
-    "react-dom": "^0.14.7"
+    "react-bootstrap": "^0.32.1",
+    "react-dom": "^0.14.7",
+    "react-router-dom": "^4.2.2"
   }
 }
