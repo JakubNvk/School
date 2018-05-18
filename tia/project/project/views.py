@@ -15,11 +15,6 @@ def index():
     return render_template('index.html')
 
 
-@skialp.route('/dashboard')
-def dashboard():
-    return render_template('dashboard.html')
-
-
 @skialp.route('/login', methods=('GET', 'POST'))
 def login():
     form = LoginForm()
@@ -45,3 +40,28 @@ def register():
 def logout():
     logout_user()
     return redirect(url_for('skialp.index'))
+
+
+@skialp.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html')
+
+
+@skialp.route('/profile')
+def profile():
+    return render_template('profile.html')
+
+
+@skialp.route('/create_profile')
+def create_profile():
+    return render_template('create_profile.html')
+
+
+@skialp.route('/expeditions')
+def expeditions():
+    return render_template('expeditions.html')
+
+
+@skialp.route('/create_expedition')
+def create_expedition():
+    return render_template('create_expedition.html')
