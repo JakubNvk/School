@@ -6,26 +6,33 @@ class ExpeditionsList extends Component {
     constructor() {
         super();
         this.state = {
-            expeditions: [],
+            expeditions: null,
         };
     }
 
     componentDidMount() {
-        fetch('http://127.0.0.1:5000/api/expeditions')
-        .then(results => {
-            return results.json();
-        }).then(data => {
-            this.setState({expeditions: data.results});
-            console.log(this.state.expeditions);
+        let _this = this;
+
+        fetch('./api/expeditions', {
+            credentials: 'same-origin'
         })
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(responseJson) {
+            _this.setState({
+                expeditions: responseJson
+            })
+        });
     }
 
     render() {
-        return (
-            <div id='exp'>
-                {this.state.expeditions}
-            </div>
-            )
+        var expeditions = this.state.expeditions;
+        var stringify = JSON.stringify(expeditions);
+        var exp = JSON.parse(stringify);
+        console.log('exp', exp)
+
+        return(<div></div>)
     }
 
 }

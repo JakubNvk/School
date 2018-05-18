@@ -2,7 +2,7 @@ var webpack = require('webpack');
 module.exports = {
   mode: 'development',
   entry: [
-    __dirname + '/project/static/scripts/jsx/'
+    __dirname + '/project/static/scripts/jsx'
   ],
   output: {
     path: __dirname + '/project/static/scripts/js',
