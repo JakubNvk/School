@@ -13,40 +13,24 @@ class ExpeditionsList extends Component {
     componentDidMount() {
         let _this = this;
 
-        fetch('./api/expeditions', {
-            credentials: 'same-origin'
-        })
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(responseJson) {
-            _this.setState({
-                expeditions: responseJson.expeditions
-            });
+        $.ajax({
+          url: './api/expeditions',
+          dataType: 'json',
+          cache: false,
+          success: function(data) {
+            this.setState({expeditions: data});
+          }.bind(this),
+          error: function(xhr, status, err) {
+            console.error('./api/expeditions', status, err.toString());
+          }.bind(this)
         });
     }
 
     render() {
         var expeditions = this.state.expeditions;
-        var stringify = JSON.stringify(expeditions);
-        var exp = JSON.parse(stringify);
-
-        // return (
-            // <div>
-            // {this.state.expeditions.map(function(exp) {
-                // return (
-                // <div key={e.id} className="e">
-                    // <p>Description: {e.description}</p>
-                    // <p>Min_difficulty: {e.min_difficulty}</p>
-                    // <p>Max_difficulty: {e.max_difficulty}</p>
-                    // <p>Members: {e.members}</p>
-                // </div>
-                // );
-            // })}
-            // </div>
-        // )
+        console.log(expeditions)
+        return (<div></div>)
     }
-
 }
 
 export default ExpeditionsList
