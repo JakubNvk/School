@@ -37,7 +37,10 @@ class RegistrationForm(Form):
 
 
 class ProfileForm(Form):
-    pass
+    age = fields.IntegerField(validators=[NumberRange(min=1, max=115)])
+    skills = fields.IntegerField(validators=[NumberRange(min=1, max=10)])
+    region = fields.StringField(validators=[DataRequired()])
+    description = fields.StringField()
 
 
 class ExpeditionForm(Form):
