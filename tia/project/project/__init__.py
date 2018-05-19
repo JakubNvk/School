@@ -12,8 +12,8 @@ api = Api(app)
 app.config.from_object('config')
 
 # API resource routing
-api.add_resource(ProfileList, '/api/profile')
-api.add_resource(ProfileDetail, '/api/profile/<int:id>')
+api.add_resource(ProfileList, '/api/profiles')
+api.add_resource(ProfileDetail, '/api/profile')
 api.add_resource(ExpeditionList, '/api/expeditions')
 api.add_resource(ExpeditionDetail, '/api/expedition/<int:id>')
 api.add_resource(ExpeditionMembership, '/api/expedition/<int:id>/membership')

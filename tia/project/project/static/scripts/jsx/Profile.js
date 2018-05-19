@@ -15,14 +15,14 @@ class Profile extends Component {
         let _this = this;
 
         $.ajax({
-          url: './api/profile/<int:id>',
+          url: './api/profile',
           dataType: 'json',
           cache: false,
           success: function(data) {
             _this.setState({profile: data.profile});
           }.bind(this),
           error: function(xhr, status, err) {
-            console.error('./api/profile/<int:id>', status, err.toString());
+            console.error('./api/profile', status, err.toString());
           }.bind(this)
         });
     }
@@ -30,11 +30,12 @@ class Profile extends Component {
     createRender() {
         let profile = this.state.profile;
         let table = [];
+        let user = profile.user;
 
         table.push(
             <Media>
                 <Media.Body>
-                    <Media.Heading componentClass='h2'>{profile.user.email}</Media.Heading>
+                    <Media.Heading componentClass='h2'>Profile</Media.Heading>
                     <Table striped bordered condensed hover>
                         <thead>
                             <tr>

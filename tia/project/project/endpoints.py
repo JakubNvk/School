@@ -39,25 +39,26 @@ class ProfileList(Resource):
 
 class ProfileDetail(Resource):
     @login_required
-    def get(self, id):
+    def get(self):
         ''' Get user profile. '''
 
+        user = current_user
+
         try:
-            profile = Profile.query.filter(Profile.id == id).one()
-            
+            profile = Profile.query.filter(Profile.user_id == user.id).one()
             return jsonify(profile=profile.serialize)
         except Exception as e:
             print e
             abort(404)
 
     @login_required
-    def patch(self, id):
+    def patch(self):
         ''' Edit user profile. '''
 
         user = current_user
 
         try:
-            profile = Profile.query.filter(Profile.id == id).one()
+            profile = Profile.query.filter(Profile.user_id == user.id).one()
             if profile.user.id != user.id:
                 abort(403)
 
@@ -70,13 +71,13 @@ class ProfileDetail(Resource):
             abort(500)
 
     @login_required
-    def delete(self, id):
+    def delete(self):
         ''' Delete user profile. '''
 
         user = current_user
 
         try:
-            profile = Profile.query.filter(Profile.id == id).one()
+            profile = Profile.query.filter(Profile.user_id == user.id).one()
             if profile.user.id != user.id:
                 abort(403)
             profile.delete()
