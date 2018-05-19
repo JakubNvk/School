@@ -6,7 +6,7 @@ class ExpeditionsList extends Component {
     constructor() {
         super();
         this.state = {
-            expeditions: null,
+            expeditions: []
         };
     }
 
@@ -21,16 +21,15 @@ class ExpeditionsList extends Component {
         })
         .then(function(responseJson) {
             _this.setState({
-                expeditions: responseJson
-            })
+                expeditions: responseJson.expeditions
+            });
         });
     }
 
     render() {
-        var expeditions = this.state.expeditions;
-        var stringify = JSON.stringify(expeditions);
-        var exp = JSON.parse(stringify);
-        console.log('exp', exp)
+        // var expeditions = this.state.expeditions;
+        // var stringify = JSON.stringify(expeditions);
+        // var exp = JSON.parse(stringify);
 
         return(<div></div>)
     }
