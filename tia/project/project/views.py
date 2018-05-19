@@ -1,7 +1,7 @@
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask.ext.login import current_user, login_required, login_user, logout_user
 
-from .forms import LoginForm, RegistrationForm, ExpeditionForm
+from .forms import LoginForm, RegistrationForm, ExpeditionForm, ProfileForm
 from .data import db, query_to_list
 from .models import User
 
@@ -52,9 +52,10 @@ def profile():
     return render_template('profile.html')
 
 
-@skialp.route('/create_profile')
-def create_profile():
-    return render_template('create_profile.html')
+@skialp.route('/edit_profile')
+def edit_profile():
+    form = ProfileForm()
+    return render_template('edit_profile.html', form=form)
 
 
 @skialp.route('/expeditions')
@@ -64,4 +65,5 @@ def expeditions():
 
 @skialp.route('/create_expedition')
 def create_expedition():
-    return render_template('create_expedition.html')
+    form = ExpeditionForm()
+    return render_template('create_expedition.html', form=form)

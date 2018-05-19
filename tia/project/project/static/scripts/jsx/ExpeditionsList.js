@@ -27,11 +27,24 @@ class ExpeditionsList extends Component {
     }
 
     render() {
-        // var expeditions = this.state.expeditions;
-        // var stringify = JSON.stringify(expeditions);
-        // var exp = JSON.parse(stringify);
+        var expeditions = this.state.expeditions;
+        var stringify = JSON.stringify(expeditions);
+        var exp = JSON.parse(stringify);
 
-        return(<div></div>)
+        // return (
+            // <div>
+            // {this.state.expeditions.map(function(exp) {
+                // return (
+                // <div key={e.id} className="e">
+                    // <p>Description: {e.description}</p>
+                    // <p>Min_difficulty: {e.min_difficulty}</p>
+                    // <p>Max_difficulty: {e.max_difficulty}</p>
+                    // <p>Members: {e.members}</p>
+                // </div>
+                // );
+            // })}
+            // </div>
+        // )
     }
 
 }
