@@ -92,9 +92,20 @@ class ExpeditionList(Resource):
     def get(self):
         ''' Get list of all expeditions. '''
         try:
+            user = current_user
+            expeditions_json = []
             expeditions = Expedition.query.all()
+            
+            for expedition in expeditions:
+                expedition_json = expedition.serialize
+                for member in expedition.members:
+                    if member.id == user.id:
+                        expedition_json['isMember'] = True
+                    else:
+                        expedition_json['isMember'] = False
+                expeditions_json.append(expedition_json)
 
-            return jsonify(expeditions=[i.serialize for i in expeditions])
+            return jsonify(expeditions=expeditions_json)
         except Exception as e:
             print e
             abort(500)
@@ -106,6 +117,11 @@ class ExpeditionList(Resource):
 
         try:
             expedition_data = loads(request.data)
+
+            if expedition_data.get('valid_to') is not None:
+                print expedition_data['valid_to']
+                expedition_data['valid_to'] = datetime.datetime.fromtimestamp(expedition_data['valid_to'])
+
             expedition = Expedition.create(**expedition_data)
             
             return jsonify(expedition=expedition.serialize)
@@ -203,4 +219,18 @@ class ExpeditionMembership(Resource):
 
             return jsonify(expedition=expedition.serialize)
         except Exception as e:
+            abort(500)
+
+
+class ExpeditionMe(Resource):
+    @login_required
+    def get(self):
+        ''' Get list of all expeditions. '''
+        try:
+            user = current_user
+            expeditions = Expedition.query.filter(Expedition.members.any(User.id==user.id)).all()
+            
+            return jsonify(expeditions=[i.serialize for i in expeditions])
+        except Exception as e:
+            print e
             abort(500)

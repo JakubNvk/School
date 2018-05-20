@@ -3,9 +3,5 @@
 {% block title %}Create expedition{% endblock %}
 {% block content %}
 {{ super() }}
-<form action="{{url_for('skialp.create_expedition')}}" method="POST">
-{{ forms.render(form) }}
-<p><input type="Submit" value="Confirm"></p>
-</form>
 <div id='create_expedition'></div>
 {% endblock content %}

@@ -5,7 +5,7 @@ from .auth import login_manager
 from .data import db
 from .views import skialp
 
-from .endpoints import ProfileList, ProfileDetail, ExpeditionList, ExpeditionDetail, ExpeditionMembership
+from .endpoints import ProfileList, ProfileDetail, ExpeditionList, ExpeditionDetail, ExpeditionMembership, ExpeditionMe
 
 app = Flask(__name__)
 api = Api(app)
@@ -16,6 +16,7 @@ api.add_resource(ProfileList, '/api/profiles')
 api.add_resource(ProfileDetail, '/api/profile')
 api.add_resource(ExpeditionList, '/api/expeditions')
 api.add_resource(ExpeditionDetail, '/api/expedition/<int:id>')
+api.add_resource(ExpeditionMe, '/api/expeditions/me')
 api.add_resource(ExpeditionMembership, '/api/expedition/<int:id>/membership')
 
 

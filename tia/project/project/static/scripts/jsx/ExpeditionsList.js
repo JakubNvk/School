@@ -27,9 +27,43 @@ class ExpeditionsList extends Component {
         });
     }
 
+    handleDelete(exp_id) {
+        $.ajax({
+            url: './api/expedition/' + exp_id,
+            type: 'DELETE',
+            dataType: 'json',
+            success: function(result) {
+                location.reload();
+            }
+        });
+    }
+
+    handleAddMember(exp_id) {
+        $.ajax({
+            url: './api/expedition/' + exp_id + '/membership',
+            type: 'PUT',
+            dataType: 'json',
+            success: function(result) {
+                location.reload();
+            }
+        });
+    }
+
+    handleRemoveMember(exp_id) {
+        $.ajax({
+            url: './api/expedition/' + exp_id + '/membership',
+            type: 'DELETE',
+            dataType: 'json',
+            success: function(result) {
+                location.reload();
+            }
+        });
+    }
+
     createRender() {
         let expeditions = this.state.expeditions;
         let table = [];
+        let _this = this;
 
         for (let i = 0; i < expeditions.length; i++) {
             let expedition = expeditions[i];
@@ -40,10 +74,29 @@ class ExpeditionsList extends Component {
                 attendees.push(<p>{members[j].email}</p>);
             }
             
+            let handleDelete = function() {
+                _this.handleDelete(expedition.id);
+            }
+
+            let handleAddMember = function() {
+                _this.handleAddMember(expedition.id);
+            }
+
+            let handleRemoveMember = function() {
+                console.log('rem1');
+                _this.handleRemoveMember(expedition.id);
+            }
+
+            const button = expedition.isMember ? (
+              <button type="button" className="btn btn-success" onClick={handleRemoveMember}>Leave</button>
+            ) : (
+              <button type="button" className="btn btn-success" onClick={handleAddMember}>Join</button>
+            );
+
             table.push(
                 <Media>
                     <Media.Body>
-                        <Media.Heading componentClass='h2'>Expedition to: {expedition.description}</Media.Heading>
+                        <Media.Heading componentClass='h2'>Expedition to: {expedition.location}</Media.Heading>
                         <Table striped bordered condensed hover>
                             <thead>
                               <tr>
@@ -62,6 +115,8 @@ class ExpeditionsList extends Component {
                                 </tr>
                             </tbody>
                         </Table>
+                        {button}
+                        <button type="button" className="btn btn-danger" onClick={handleDelete}>Delete</button>
                     </Media.Body>
                 </Media>
                 );

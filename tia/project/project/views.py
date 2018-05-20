@@ -1,9 +1,11 @@
+import datetime
+
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask.ext.login import current_user, login_required, login_user, logout_user
 
 from .forms import LoginForm, RegistrationForm, ExpeditionForm, ProfileForm
 from .data import db, query_to_list
-from .models import User
+from .models import User, Profile
 
 skialp = Blueprint('skialp', __name__)
 
@@ -30,6 +32,8 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         user = User.create(**form.data)
+        user.profile.append(Profile.create())
+        user.save()
         login_user(user)
         return redirect(url_for('skialp.index'))
     return render_template('register.html', form=form)

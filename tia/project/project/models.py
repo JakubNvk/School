@@ -128,7 +128,7 @@ class Expedition(CRUDMixin, db.Model):
     max_difficulty = db.Column(db.Integer, default=10)
     description = db.Column(db.String)
     comments = db.relationship('Comment')
-    locations = db.relationship('Location')
+    location = db.Column(db.String, default='Nowhere')
     members = db.relationship('User', secondary=association_table, back_populates='expeditions')
 
     @property
@@ -143,7 +143,7 @@ class Expedition(CRUDMixin, db.Model):
            'max_difficulty': self.max_difficulty,
            'description': self.description,
            'comments': [item.serialize for item in self.comments],
-           'locations': [item.serialize for item in self.locations],
+           'location': self.location,
            'members': [item.serialize for item in self.members]
        }
 
